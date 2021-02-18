@@ -160,3 +160,7 @@ exports.handler = async (event) => {
 ### Is it worth? ###
 
 YES
+
+### Credits ###
+
+Big thank to Fabio Fava my co-worker for the collaboration of this PoC
