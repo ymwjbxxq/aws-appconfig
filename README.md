@@ -12,7 +12,7 @@ While deploying application configurations, a simple typo could cause an unexpec
 
 **Deploy and monitor**
 
-Define deployment criteria and rate controls to determine how your targets receive the new configuration. Use AWS AppConfig deployment strategies to set deployment velocity, deployment time, and bake time. Monitor each deployment to proactively catch any errors using AWS AppConfig integration with Amazon CloudWatch Events. If AWS AppConfig encounters an error, the system rolls back the deployment to minimize impact on your application users.
+Define deployment criteria and rate controls to determine how your targets receive the new configuration. Use AWS AppConfig deployment strategies to set deployment velocity, deployment time, and bake time. Monitor each deployment to proactively catch any errors using AWS AppConfig integration with Amazon CloudWatch Events. If AWS AppConfig encounters an error, the system rolls back the deployment to minimize the impact on your application users.
 
 ### S3 vs Parameter Store vs Lambda Layers vs AppConfig  ###
 
@@ -94,9 +94,9 @@ Resources:
 Some explanation: 
 
 * AWS::AppConfig::Application defines the “application”, the component where we group all our configurations 
-* AWS::AppConfig::ConfigurationProfile defines the configuration, what in the end we will refer from the lambda to get the json 
+* AWS::AppConfig::ConfigurationProfile defines the configuration, what in the end we will refer from the lambda to get the JSON 
 * AWS::AppConfig::HostedConfigurationVersion is the “glue” that connects a configuration, an application the JSON that defines the configuration. As we mentioned above it is possible to avoid hardcoding values, by using transformations and S3 for the uploading phase only. We will show this in section 5. 
-* AWS::AppConfig::DeploymentStrategy a deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes: the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time. Can be linear or exponential. 
+* AWS::AppConfig::DeploymentStrategy a deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time. Can be linear or exponential. 
 * AWS::AppConfig::Environment defines a logical deployment group of AppConfig targets (for example you can define a logical structure like Web, Mobile, Back-end etc., to separate environments configurations). 
 * AWS::AppConfig::Deployment starts the deployment of the configuration. 
 
