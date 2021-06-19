@@ -95,21 +95,21 @@ Some explanation:
 
 * AWS::AppConfig::Application defines the “application”, the component where we group all our configurations 
 * AWS::AppConfig::ConfigurationProfile defines the configuration, what in the end we will refer from the lambda to get the JSON 
-* AWS::AppConfig::HostedConfigurationVersion is the “glue” that connects a configuration, an application the JSON that defines the configuration. As we mentioned above it is possible to avoid hardcoding values, by using transformations and S3 for the uploading phase only. We will show this in section 5. 
-* AWS::AppConfig::DeploymentStrategy a deployment strategy defines important criteria for rolling out your configuration to the designated targets. A deployment strategy includes the overall duration required, a percentage of targets to receive the deployment during each interval, an algorithm that defines how percentage grows, and bake time. Can be linear or exponential. 
-* AWS::AppConfig::Environment defines a logical deployment group of AppConfig targets (for example you can define a logical structure like Web, Mobile, Back-end etc., to separate environments configurations). 
+* AWS::AppConfig::HostedConfigurationVersion is the “glue” that connects a configuration, an application the JSON that defines the configuration. As mentioned above, it is possible to avoid hardcoding values by using transformations and S3 for the uploading phase only. We will show this in section 5. 
+* AWS::AppConfig::DeploymentStrategy a deployment strategy defines critical criteria for rolling out your configuration to the designated targets. A deployment strategy includes the overall duration required, a percentage of marks to receive the deployment during each interval, an algorithm that defines how the rate grows, and bake time. It can be linear or exponential. 
+* AWS::AppConfig::Environment defines a logical deployment group of AppConfig targets (for example, you can specify a logical structure like Web, Mobile, Back-end etc., to separate environments configurations). 
 * AWS::AppConfig::Deployment starts the deployment of the configuration. 
 
 Very important is to highlight that the limitations that CloudFormation has: 
 
 * The documented way to pass the configuration content (in our case JSON) is to hardcode it in the template  
-* It does not support loading of JSON files from your local pipeline or filesystem, but only hardcoded texts of max 4K.
+* It does not support the loading of JSON files from your local pipeline or filesystem, but only hardcoded texts of max 4K.
 
 **Workaround**
 
 The workaround is by using CloudFormation Transformations and using an S3 Bucket for the loading phase:
 
-* Add an extra string in the JSON "Content: |", to be processed by the transformation (see next subsection) 
+* Add an extra string in the JSON "Content: |" to be processed by the transformation (see next subsection) 
 * Upload the JSON to S3
 * Provide the link to the CloudFormation to upload this file in the transformation 
 * After the deployment is done, the bucket can be removed 
@@ -133,7 +133,7 @@ BasicHostedConfigurationVersion:
 
 ### Lambda snipt ###
 
-The integration with the AWS Lamba is instead extremely easy. AWS AppConfig works as a Lamba Integration, running as an HTTP Server in localhost. Each request from a Lambda directed to AppConfig goes directly to the HTTP server, which is forwarding the message to AppConfig, retrieving the information and send it back. Caching is also possible, to improve the performances
+The integration with the AWS Lamba is, instead, straightforward. AWS AppConfig works as a Lamba Integration, running as an HTTP Server in localhost. Each request from a Lambda directed to AppConfig goes directly to the HTTP server, forwarding the message to AppConfig, retrieving the information and sending it back. Caching is also possible to improve the performances.
 
 ```javascript
 const AWS = require('aws-sdk'); 
@@ -163,4 +163,4 @@ YES
 
 ### Credits ###
 
-Big thank to Fabio Fava my co-worker for the collaboration of this PoC
+Big thank to Fabio Fava, my co-worker, for the collaboration of this PoC
